@@ -32,14 +32,20 @@ jobs:
         auto-activate-base: false
         channels: conda-forge
 
-    - name: Install packages
-      run: mamba install xeus-robot=0.2.1 jupyter jupyter_kernel_test
+    - name: Install deps
+      run: mamba install xeus-python xtl cmake cppzmq nlohmann_json pybind11 pybind11_json robotframework-interpreter ipywidgets jupyterlab_robotmode jupyter_kernel_test
+
+    - name: cmake
+      run: cmake -G "NMake Makefiles" -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX -D PYTHON_EXECUTABLE=`which python` .
+
+    - name: make
+      run: nmake -j6 install
 
     - name: xrobot version
       run: xrobot --version
 
-    - name: xrobot bin
-      run: xrobot
+    # - name: xrobot bin
+    #   run: xrobot
 
     - name: Run tests
       run: python test/test_xrobot_kernel.py -vvv
