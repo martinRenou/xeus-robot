@@ -33,7 +33,13 @@ jobs:
         channels: conda-forge
 
     - name: Install packages
-      run: mamba install xeus-robot jupyter jupyter_kernel_test
+      run: mamba install xeus-robot=0.2.1 jupyter jupyter_kernel_test
+
+    - name: xrobot version
+      run: xrobot --version
+
+    - name: xrobot bin
+      run: xrobot
 
     - name: Run tests
       run: python test/test_xrobot_kernel.py -vvv
